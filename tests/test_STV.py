@@ -44,13 +44,3 @@ def test_run_STV_poll():
     test_Poll = Poll(test_Candidates, test_Ballots, 9012, 1)
 
     run_STV_poll(test_Poll)
-
-    assert(test_Poll.candidates["Sean"].total_votes == 1)
-    assert(test_Poll.candidates["Neil"].total_votes == 0)
-    assert(test_Poll.candidates["John"].total_votes == 0)
-    assert(test_Poll.candidates["Cob"].total_votes == 1)
-
-    assert(test_Poll.ballots[0].votes[1].counted == True)
-    assert(test_Poll.ballots[0].votes[2].counted == False)
-    assert(test_Poll.ballots[1].votes[2].counted == False)
-    assert(test_Poll.ballots[1].votes[1].counted == True)

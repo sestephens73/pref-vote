@@ -1,12 +1,8 @@
 class Vote:
     def __init__(self, candidate, rank):
         self.candidate = candidate # A string with the candidate's name (not a candidate class)
-        self._rank = rank           # The rank of the candidate for this vote
+        self.rank = rank           # The rank of the candidate for this vote
         self.counted = False       # Tells whether this vote has been counted yet
-
-    @property
-    def rank(self):
-        return self._rank
 
 class Ballot:
     def __init__(self, votes, id):
@@ -16,14 +12,9 @@ class Ballot:
 class Candidate:
     def __init__(self, name):
         self.name = name # A string with the name of the candidate
-        self._total_votes = 0 # The candidate's running total of votes
+        self.total_votes = 0 # The candidate's running total of votes
         self.has_won = False # Boolean determining whether the candidate has won yet
         self.is_eligible = True # Boolean determining whether the candidate has been eliminated
-
-    @property
-    def total_votes(self):
-        return self._total_votes
-
 
 class Poll:
     def __init__(self, candidates, ballots, id, num_winners):
