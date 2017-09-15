@@ -73,7 +73,9 @@ def test_multiple_ballot_poll_1():
     test_Votes_2 = [Vote("A", 1), Vote("B", 3), Vote("D", 2)]
     test_Ballots = [Ballot(test_Votes_1, 1), Ballot(test_Votes_2, 2)]
     test_Candidates = [Candidate("A"), Candidate("B"), Candidate("C"), Candidate("D")]
-    test_Poll = Poll(test_Candidates, test_Ballots, 9012, 3)
+    test_Poll = Poll('foo', test_Candidates, 9012, 3)
+    for ballot in test_Ballots:
+        test_Poll.submit_ballot(ballot)
 
     assert(run_STV_poll(test_Poll) == {1:["A"], 2:["B"], 3:["D"]})
 
@@ -92,7 +94,9 @@ def test_perfect_loser_tie():
     test_Votes_2 = [Vote("A", 1), Vote("B", 2), Vote("D", 3)]
     test_Ballots = [Ballot(test_Votes_1, 1), Ballot(test_Votes_2, 2)]
     test_Candidates = [Candidate("A"), Candidate("B"), Candidate("C"), Candidate("D")]
-    test_Poll = Poll(test_Candidates, test_Ballots, 9012, 3)
+    test_Poll = Poll('foo', test_Candidates, 9012, 3)
+    for ballot in test_Ballots:
+        test_Poll.submit_ballot(ballot)
 
     assert(run_STV_poll(test_Poll) == {1:["A"], 2:["B"], 3:["C", "D"]})
 
@@ -102,7 +106,9 @@ def test_imperfect_loser_tie():
     test_Votes_3 = [Vote("A", 1), Vote("B", 2), Vote("E", 3), Vote("C", 4)]
     test_Ballots = [Ballot(test_Votes_1, 1), Ballot(test_Votes_2, 2), Ballot(test_Votes_3, 3)]
     test_Candidates = [Candidate("A"), Candidate("B"), Candidate("C"), Candidate("D"), Candidate("E")]
-    test_Poll = Poll(test_Candidates, test_Ballots, 9012, 3)
+    test_Poll = Poll('foo', test_Candidates, 9012, 3)
+    for ballot in test_Ballots:
+        test_Poll.submit_ballot(ballot)
 
     assert(run_STV_poll(test_Poll) == {1:["A"], 2:["B"], 3:["C"]})
 
@@ -111,7 +117,9 @@ def test_perfect_winner_tie():
     test_Votes_2 = [Vote("B", 1), Vote("A", 2), Vote("C", 3)]
     test_Ballots = [Ballot(test_Votes_1, 1), Ballot(test_Votes_2, 2)]
     test_Candidates = [Candidate("A"), Candidate("B"), Candidate("C"), Candidate("D")]
-    test_Poll = Poll(test_Candidates, test_Ballots, 9012, 3)
+    test_Poll = Poll('foo', test_Candidates, 9012, 3)
+    for ballot in test_Ballots:
+        test_Poll.submit_ballot(ballot)
 
     assert(run_STV_poll(test_Poll) == {1:["A", "B"], 3:["C"]})
 
@@ -121,7 +129,9 @@ def test_imperfect_winner_tie():
     test_Votes_3 = [Vote("C", 1), Vote("A", 2)]
     test_Ballots = [Ballot(test_Votes_1, 1), Ballot(test_Votes_2, 2), Ballot(test_Votes_3, 3)]
     test_Candidates = [Candidate("A"), Candidate("B"), Candidate("C"), Candidate("D")]
-    test_Poll = Poll(test_Candidates, test_Ballots, 9012, 3)
+    test_Poll = Poll('foo', test_Candidates, 9012, 3)
+    for ballot in test_Ballots:
+        test_Poll.submit_ballot(ballot)
 
     assert(run_STV_poll(test_Poll) == {1:["A"], 2:["B"], 3:["C"]})
 
@@ -131,7 +141,9 @@ def test_more_winners_than_allocated():
     test_Votes_3 = [Vote("C", 1)]
     test_Ballots = [Ballot(test_Votes_1, 1), Ballot(test_Votes_2, 2), Ballot(test_Votes_3, 3)]
     test_Candidates = [Candidate("A"), Candidate("B"), Candidate("C"), Candidate("D")]
-    test_Poll = Poll(test_Candidates, test_Ballots, 9012, 3)
+    test_Poll = Poll('foo',test_Candidates, 9012, 3)
+    for ballot in test_Ballots:
+        test_Poll.submit_ballot(ballot)
 
     assert(run_STV_poll(test_Poll) == {1:["A", "B", "C"]})
 
