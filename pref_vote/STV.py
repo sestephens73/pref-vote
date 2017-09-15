@@ -7,7 +7,7 @@ def run_STV_poll(poll): # Pass in a Poll object
 
     """
     winners: A dictionary of all winners, to be returned.
-    Key is an integer, the place. 
+    Key is an integer, the place.
     Value is a list (in case of ties) of strings, the winning candidates
     """
     winners = {}
