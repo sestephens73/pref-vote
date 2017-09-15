@@ -79,6 +79,17 @@ def test_multiple_ballot_poll_1():
 
     assert(run_STV_poll(test_Poll) == {1:["A"], 2:["B"], 3:["D"]})
 
+def test_multiple_ballot_poll_2():
+    test_Votes_1 = [Vote("A", 4), Vote("B", 2), Vote("C", 1), Vote("D", 3)]
+    test_Votes_2 = [Vote("A", 4), Vote("B", 1), Vote("C", 3), Vote("D", 2)]
+    test_Ballots = [Ballot(test_Votes_1, 1), Ballot(test_Votes_2, 2)]
+    test_Candidates = [Candidate("A"), Candidate("B"), Candidate("C"), Candidate("D")]
+    test_Poll = Poll('foo', test_Candidates, 9012, 1)
+    for ballot in test_Ballots:
+        test_Poll.submit_ballot(ballot)
+
+    assert(run_STV_poll(test_Poll) == {1:["B"]})
+
 def test_more_winners_than_candidates():
     test_Votes_1 = [Vote("A", 1), Vote("B", 2), Vote("C", 3)]
     test_Ballots = [Ballot(test_Votes_1, 1)]
@@ -145,5 +156,5 @@ def test_more_winners_than_allocated():
     for ballot in test_Ballots:
         test_Poll.submit_ballot(ballot)
 
-    assert(run_STV_poll(test_Poll) == {1:["A", "B", "C"]})
+    assert(run_STV_poll(test_Poll) == {1:["A", "C", "B"]})
 

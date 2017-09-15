@@ -65,7 +65,7 @@ def run_STV_poll(poll): # Pass in a Poll object
                     if total_winners + 1 not in winners:
                         winners[total_winners + 1] = []
                     winners[total_winners + 1].append(c.name)
-                    return winners
+                return winners
             for c in bot_eligible_candidates:
                 c.is_eligible = False
                 remaining_eligible_candidates -= 1
