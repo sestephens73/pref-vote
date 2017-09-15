@@ -70,3 +70,27 @@ def redistribute_votes(cand, is_for_winner, poll, threshold):
                     cur_vote.counted = True
                     cur_vote_rank += 1
     return
+
+# Function that breaks the ties of a number of winners
+def break_winner_tie(tied_cands):
+    done = False	# Variable declaring if a winner has been determined, set to true if no more voting ranks available
+    i = 1 			# Which ran of tied votes the candidates are on
+    while len(tied_cands) > 1 and done = False:
+        most_votes = 0 # Running highest votes for this layer
+        temp = 0
+		winning_cands = []
+		for c in tied_cands: # For each candidate
+    		for b in poll.ballots: # For each ballot
+				# If that vote layer exists and the candidate is that vote
+        		if i in b.votes and b.votes[i].candidate in tied_cands:   
+                	temp += 1
+            # If new winner, set most_votes
+            if temp > most_votes:
+            	most_votes = temp
+        # Add all cands with max votes to winning_cands array
+        if temp == most_votes:
+			winning_cands.append(tied_cands[c])
+        i += 1
+        #if # This will be the set false statement -- FIX THIS!!!!!
+    tied_cands = winning_cands
+    return tied_cands
