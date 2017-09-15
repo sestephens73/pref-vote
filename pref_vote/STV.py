@@ -36,7 +36,6 @@ def run_STV_poll(poll): # Pass in a Poll object
                     winners[total_winners + 1].append(c.name)
                 for c in top_eligible_candidates:
                     total_winners += 1
-            #YOU ARE HERE
             return winners
         highest_num_of_votes = max([candidate for candidate in poll.candidates.values() if candidate.is_eligible], key=lambda x:x.total_votes).total_votes
         top_eligible_candidates = [candidate for candidate in poll.candidates.values() if candidate.is_eligible and candidate.total_votes == highest_num_of_votes]
@@ -72,7 +71,6 @@ def run_STV_poll(poll): # Pass in a Poll object
                 remaining_eligible_candidates -= 1
             for c in bot_eligible_candidates:
                 redistribute_votes(c, False, poll, threshold)
-        poll.print_all_candidate_info()
     return winners
 
 # Redistributs the votes of a candidate who is no longer eligible. Redistributes all of a bottom candidate's votes. Redistributes surplus of a winning candidate's votes, fractionally.
@@ -113,11 +111,11 @@ def break_winner_tie(tied_cands, poll):
             # If tied with rest of candidates, just add current one to the list for next tiebreaker
             elif cur_cand_votes == most_votes:
                 winning_cands.append(c)
-            # Set up for next loop.
-            tied_cands = winning_cands
-            if n > len(poll.candidates): # In case there's a perfect tie and all votes have been taken into account
-                return tied_cands
-            n += 1
+        # Set up for next loop.
+        tied_cands = winning_cands
+        if n > len(poll.candidates): # In case there's a perfect tie and all votes have been taken into account
+            return tied_cands
+        n += 1
     return tied_cands
 
 # Function that breaks the ties of a number of losers
@@ -139,9 +137,9 @@ def break_loser_tie(tied_cands, poll):
             # If tied with rest of candidates, just add current one to the list for next tiebreaker
             elif cur_cand_votes == fewest_votes:
                 losing_cands.append(c)
-            # Set up for next loop.
-            tied_cands = losing_cands
-            if n > len(poll.candidates): # In case there's a perfect tie and all votes have been taken into account
-                return tied_cands
-            n += 1
+        # Set up for next loop.
+        tied_cands = losing_cands
+        if n > len(poll.candidates): # In case there's a perfect tie and all votes have been taken into account
+            return tied_cands
+        n += 1
     return tied_cands
