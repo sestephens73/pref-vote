@@ -20,7 +20,24 @@ def run_STV_poll(poll): # Pass in a Poll object
                 poll.candidates[b.votes[1].candidate].total_votes += 1
             b.votes[1].counted = True
 
-    while total_winners < poll.num_winners and remaining_eligible_candidates > poll.num_winners - total_winners:
+    while total_winners < poll.num_winners:
+        if remaining_eligible_candidates <= poll.num_winners - total_winners: # This ends the poll.
+            while len([candidate for candidate in poll.candidates.values() if candidate.is_eligible]) > 0:
+                highest_num_of_votes = max([candidate for candidate in poll.candidates.values() if candidate.is_eligible], key=lambda x:x.total_votes).total_votes
+                top_eligible_candidates = [candidate for candidate in poll.candidates.values() if candidate.is_eligible and candidate.total_votes == highest_num_of_votes]
+                if len(top_eligible_candidates) > 1:
+                    top_eligible_candidates = break_winner_tie(top_eligible_candidates, poll)
+                for c in top_eligible_candidates:
+                    c.has_won = True
+                    c.is_eligible = False
+                    remaining_eligible_candidates -= 1
+                    if total_winners + 1 not in winners:
+                        winners[total_winners + 1] = []
+                    winners[total_winners + 1].append(c.name)
+                for c in top_eligible_candidates:
+                    total_winners += 1
+            #YOU ARE HERE
+            return winners
         highest_num_of_votes = max([candidate for candidate in poll.candidates.values() if candidate.is_eligible], key=lambda x:x.total_votes).total_votes
         top_eligible_candidates = [candidate for candidate in poll.candidates.values() if candidate.is_eligible and candidate.total_votes == highest_num_of_votes]
         if len(top_eligible_candidates) > 1:
@@ -30,7 +47,9 @@ def run_STV_poll(poll): # Pass in a Poll object
                 c.has_won = True
                 c.is_eligible = False
                 remaining_eligible_candidates -= 1
-                winners[total_winners + 1] = c.name
+                if total_winners + 1 not in winners:
+                    winners[total_winners + 1] = []
+                winners[total_winners + 1].append(c.name)
             for c in top_eligible_candidates:
                 total_winners += 1
                 if c.total_votes > threshold:
@@ -44,16 +63,15 @@ def run_STV_poll(poll): # Pass in a Poll object
                 for c in bot_eligible_candidates:
                     c.has_won = True
                     c.is_eligible = False
-                    winners[total_winners + 1] = c.name
+                    if total_winners + 1 not in winners:
+                        winners[total_winners + 1] = []
+                    winners[total_winners + 1].append(c.name)
                     return winners
             for c in bot_eligible_candidates:
                 c.is_eligible = False
                 remaining_eligible_candidates -= 1
             for c in bot_eligible_candidates:
                 redistribute_votes(c, False, poll, threshold)
-        print(winners) # shit
-        print("Total winners", total_winners) # shit
-        print("Still eligible", remaining_eligible_candidates) # shit
         poll.print_all_candidate_info()
     return winners
 
@@ -69,7 +87,7 @@ def redistribute_votes(cand, is_for_winner, poll, threshold):
                     if poll.candidates[cur_vote.candidate].is_eligible:
                         increment = 1;
                         if is_for_winner:
-                            increment = 1 / (cand.total_votes - threshold)
+                            increment = (cand.total_votes - threshold) / cand.total_votes
                         poll.candidates[cur_vote.candidate].total_votes += increment
                         done = True
                     cur_vote.counted = True
