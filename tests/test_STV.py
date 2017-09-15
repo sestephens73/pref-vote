@@ -42,7 +42,7 @@ def test_simple_poll_1():
     test_Candidates = [Candidate("A"), Candidate("B"), Candidate("C")]
     test_Poll = Poll(test_Candidates, test_Ballots, 9012, 1)
 
-    assert(run_STV_poll(test_Poll) == {1:"A"})
+    assert(run_STV_poll(test_Poll) == {1:["A"]})
 
 def test_simple_poll_2():
     test_Votes_1 = [Vote("A", 1), Vote("B", 2), Vote("C", 3)]
@@ -50,7 +50,7 @@ def test_simple_poll_2():
     test_Candidates = [Candidate("A"), Candidate("B"), Candidate("C")]
     test_Poll = Poll(test_Candidates, test_Ballots, 9012, 2)
 
-    assert(run_STV_poll(test_Poll) == {1:"A", 2:"B"})
+    assert(run_STV_poll(test_Poll) == {1:["A"], 2:["B"]})
 
 def test_simple_poll_3():
     test_Votes_1 = [Vote("A", 1), Vote("B", 2), Vote("C", 3)]
@@ -58,7 +58,7 @@ def test_simple_poll_3():
     test_Candidates = [Candidate("A"), Candidate("B"), Candidate("C")]
     test_Poll = Poll(test_Candidates, test_Ballots, 9012, 3)
 
-    assert(run_STV_poll(test_Poll) == {1:"A", 2:"B", 3:"C"})
+    assert(run_STV_poll(test_Poll) == {1:["A"], 2:["B"], 3:["C"]})
 
 def test_more_winners_than_candidates():
     test_Votes_1 = [Vote("A", 1), Vote("B", 2), Vote("C", 3)]
@@ -66,7 +66,7 @@ def test_more_winners_than_candidates():
     test_Candidates = [Candidate("A"), Candidate("B"), Candidate("C")]
     test_Poll = Poll(test_Candidates, test_Ballots, 9012, 4)
 
-    assert(run_STV_poll(test_Poll) == {1:"A", 2:"B", 3:"C"})
+    assert(run_STV_poll(test_Poll) == {1:["A"], 2:["B"], 3:["C"]})
 
 def test_equal_number_winners_and_candidates():
     pass
