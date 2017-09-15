@@ -25,7 +25,9 @@ def test_Poll():
     test_Votes_2 = [Vote("John", 2), Vote("Cob", 1)]
     test_Ballots = [Ballot(test_Votes_1, 1234), Ballot(test_Votes_2, 5678)]
     test_Candidates = [Candidate("Sean"), Candidate("Neil"), Candidate("John"), Candidate("Cob")]
-    uut = Poll(test_Candidates, test_Ballots, 9012, 1)
+    uut = Poll('foo', test_Candidates, 9012, 1)
+    for ballot in test_Ballots:
+        uut.submit_ballot(ballot)
 
     assert(uut.candidates["Sean"] == test_Candidates[0])
     assert(uut.candidates["Neil"] == test_Candidates[1])
@@ -40,7 +42,9 @@ def test_single_ballot_poll_1():
     test_Votes_1 = [Vote("A", 1), Vote("B", 2), Vote("C", 3)]
     test_Ballots = [Ballot(test_Votes_1, 1)]
     test_Candidates = [Candidate("A"), Candidate("B"), Candidate("C")]
-    test_Poll = Poll(test_Candidates, test_Ballots, 9012, 1)
+    test_Poll = Poll('foo', test_Candidates, 9012, 1)
+    for ballot in test_Ballots:
+        test_Poll.submit_ballot(ballot)
 
     assert(run_STV_poll(test_Poll) == {1:["A"]})
 
@@ -48,7 +52,9 @@ def test_single_ballot_poll_2():
     test_Votes_1 = [Vote("A", 1), Vote("B", 2), Vote("C", 3)]
     test_Ballots = [Ballot(test_Votes_1, 1)]
     test_Candidates = [Candidate("A"), Candidate("B"), Candidate("C")]
-    test_Poll = Poll(test_Candidates, test_Ballots, 9012, 2)
+    test_Poll = Poll('foo', test_Candidates, 9012, 2)
+    for ballot in test_Ballots:
+        test_Poll.submit_ballot(ballot)
 
     assert(run_STV_poll(test_Poll) == {1:["A"], 2:["B"]})
 
@@ -56,7 +62,9 @@ def test_single_ballot_poll_3():
     test_Votes_1 = [Vote("A", 1), Vote("B", 2), Vote("C", 3)]
     test_Ballots = [Ballot(test_Votes_1, 1)]
     test_Candidates = [Candidate("A"), Candidate("B"), Candidate("C")]
-    test_Poll = Poll(test_Candidates, test_Ballots, 9012, 3)
+    test_Poll = Poll('foo', test_Candidates, 9012, 3)
+    for ballot in test_Ballots:
+        test_Poll.submit_ballot(ballot)
 
     assert(run_STV_poll(test_Poll) == {1:["A"], 2:["B"], 3:["C"]})
 
@@ -73,7 +81,9 @@ def test_more_winners_than_candidates():
     test_Votes_1 = [Vote("A", 1), Vote("B", 2), Vote("C", 3)]
     test_Ballots = [Ballot(test_Votes_1, 1)]
     test_Candidates = [Candidate("A"), Candidate("B"), Candidate("C")]
-    test_Poll = Poll(test_Candidates, test_Ballots, 9012, 4)
+    test_Poll = Poll('foo', test_Candidates, 9012, 4)
+    for ballot in test_Ballots:
+        test_Poll.submit_ballot(ballot)
 
     assert(run_STV_poll(test_Poll) == {1:["A"], 2:["B"], 3:["C"]})
 
