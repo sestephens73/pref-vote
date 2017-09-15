@@ -30,10 +30,11 @@ def run_STV_poll(poll): # Pass in a Poll object
                 c.has_won = True
                 c.is_eligible = False
                 remaining_eligible_candidates -= 1
-                winners[total_winners + 1].append(c.name)
+                winners[total_winners + 1] = c.name
             for c in top_eligible_candidates:
                 total_winners += 1
-                redistribute_votes(c, True, poll, threshold)
+                if c.total_votes > threshold:
+                    redistribute_votes(c, True, poll, threshold)
         else: # Takes care of when the round has no winner, so the bottom candidate(s) are eliminated
             lowest_num_of_votes = min([candidate for candidate in poll.candidates.values() if candidate.is_eligible], key=lambda x:x.total_votes).total_votes
             bot_eligible_candidates = [candidate for candidate in poll.candidates.values() if candidate.is_eligible and candidate.total_votes == lowest_num_of_votes]
@@ -43,13 +44,17 @@ def run_STV_poll(poll): # Pass in a Poll object
                 for c in bot_eligible_candidates:
                     c.has_won = True
                     c.is_eligible = False
-                    winners[total_winners + 1].append(c.name)
+                    winners[total_winners + 1] = c.name
                     return winners
             for c in bot_eligible_candidates:
                 c.is_eligible = False
                 remaining_eligible_candidates -= 1
             for c in bot_eligible_candidates:
                 redistribute_votes(c, False, poll, threshold)
+        print(winners) # shit
+        print("Total winners", total_winners) # shit
+        print("Still eligible", remaining_eligible_candidates) # shit
+        poll.print_all_candidate_info()
     return winners
 
 # Redistributs the votes of a candidate who is no longer eligible. Redistributes all of a bottom candidate's votes. Redistributes surplus of a winning candidate's votes, fractionally.

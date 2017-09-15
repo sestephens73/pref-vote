@@ -22,3 +22,7 @@ class Poll: # A full poll whose winners need to be determined
         self.ballots = ballots  # A list of "Ballot" objects
         self.id = id            # The poll id
         self.num_winners = num_winners # The number of winners for the given poll
+
+    def print_all_candidate_info(self):
+        for c in self.candidates.values():
+            print(c.name, c.total_votes, c.has_won, c.is_eligible)
