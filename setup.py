@@ -13,7 +13,7 @@ from setuptools import setup
 
 setup(name='pref_vote',
       description='Preferential voting tool',
-      version='0.0.3',
+      version='0.0.4',
       url='https://github.com/jmhossler/pref_vote',
       author='John Hossler',
       author_email='john.m.hossler@gmail.com',
